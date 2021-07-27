@@ -1,18 +1,18 @@
 let searchKey = "";
 
-function getCookie(name) {
+function getCookie(key) {
     var cArr = document.cookie.split(";");
 
     for(var i = 0; i < cArr.length; i++) {
         var cPair = cArr[i].split("=");
-        if(name == cPair[0].trim()) {
+        if(key == cPair[0].trim()) {
             return cPair[1];
         }
     }
     return null;
 }
-if (getCookie("username")) {
-  document.querySelector('#username').innerHTML = getCookie("username").toUpperCase();
+if (getCookie('username')) {
+  document.querySelector('#username').innerHTML = getCookie('username').toUpperCase();
 }
 else {
   window.location.href = "http://localhost:8888/Web%20tech%20works/ajax/templates/login.html";
