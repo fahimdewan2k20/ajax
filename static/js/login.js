@@ -29,7 +29,7 @@ document.querySelector('#loginForm').onsubmit = () => {
       }
       else {
         console.log("error");
-        document.querySelector("#regErr").removeAttribute("hidden");
+        document.querySelector("#error").removeAttribute("hidden");
       }
     }
 

@@ -24,6 +24,10 @@ document.querySelector('#regForm').onsubmit = () => {
   if (fname == "" || lname == "" || gender == "" || dob == "" || religion == "" || email == "" || username == "" || password == "" || verify_password == "") {
     flag = true;
   }
+  else if (Date.now() > Date.parse(dob) + 86400*365*12) {
+    document.querySelector("#ageErr").removeAttribute("hidden");
+    flag = true;
+  }
   else if (!validateEmail(email)) {
     document.querySelector("#emailErr").removeAttribute("hidden");
     flag = true;
@@ -42,6 +46,7 @@ document.querySelector('#regForm').onsubmit = () => {
 
   if (flag) {
     document.querySelector("#regErr").removeAttribute("hidden");
+    return false;
   }
   else {
     document.querySelector("#regErr").setAttribute("hidden", false);
@@ -50,13 +55,16 @@ document.querySelector('#regForm').onsubmit = () => {
     request.onload = () => {
       const data = JSON.parse(request.responseText);
 
-      //console.log(data.user);
+      console.log(data);
 
       if (data.status == "success") {
         window.location.href = "http://localhost:8888/Web%20tech%20works/ajax/templates/login.html";
       }
       else {
-        document.querySelector("#regErr").innerHTML = data.body;
+        if (data.body) {
+          document.querySelector("#regErr").innerHTML = data.body;
+        }
+        document.querySelector("#regErr").innerHTML = "* marked fields are required";
         document.querySelector("#regErr").removeAttribute("hidden");
       }
     }
