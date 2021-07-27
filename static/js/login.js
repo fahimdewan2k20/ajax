@@ -1,3 +1,19 @@
+function getCookie(name) {
+    var cArr = document.cookie.split(";");
+
+    for(var i = 0; i < cArr.length; i++) {
+        var cPair = cArr[i].split("=");
+        if(name == cPair[0].trim()) {
+            return cPair[1];
+        }
+    }
+    return null;
+}
+
+if (getCookie("username")) {
+  document.forms["loginForm"]["username"].value = getCookie("username");
+}
+
 document.querySelector('#loginForm').onsubmit = () => {
   let username = document.forms["loginForm"]["username"].value || "";
   let password = document.forms["loginForm"]["password"].value || "";
@@ -9,7 +25,7 @@ document.querySelector('#loginForm').onsubmit = () => {
       console.log(request.responseText);
       if (request.responseText == "success") {
         console.log("success");
-        window.open("http://localhost:8888/Web%20tech%20works/ajax/welcome.php");
+        window.location.href = "http://localhost:8888/Web%20tech%20works/ajax/templates/welcome.html";
       }
       else {
         console.log("error");

@@ -5,7 +5,7 @@
   function addUser($user) {
     $conn = connect();
     $sql = $conn->prepare("INSERT INTO users VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-    $sql->bind_param("ssssissssiss", $user->username, $user->password, $user->fname, $user->lname, $user->gender, $user->dob, $user->religion, $user->present_address, $user->permanent_address, $user->phone, $user->email, $user->url);
+    $sql->bind_param("ssssisssssss", $user->username, $user->password, $user->fname, $user->lname, $user->gender, $user->dob, $user->religion, $user->present_address, $user->permanent_address, $user->phone, $user->email, $user->url);
     $sql->execute();
     if($sql->errno === 0) {
       return TRUE;
@@ -21,6 +21,17 @@
     $records = $sql->get_result();
     // var_dump($records->num_rows);
     return $records->num_rows === 1;
+  }
+
+  function searchUser($searchKey) {
+    $conn = connect();
+
+    $sql = "SELECT * FROM users WHERE username LIKE '%$searchKey%'";
+    $result = $conn->query($sql);
+    // var_dump($result);
+    if ($result->num_rows > 0) {
+      return $result;
+    }
   }
 
   function getUser($username) {

@@ -35,6 +35,7 @@
     }
     else {
       if(login($username, $password) == 1) {
+        setcookie("username", $username, time() + 86400);
         $msg = "success";
       }
       else {
